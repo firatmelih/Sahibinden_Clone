@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Car.Models.Sale>
+@using Car.Helpers
+@{
+    int n = 0;
+
+    <div class="mb-2 mt-2">
+        @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Executive))
+        {
+            <a class="btn btn-info" asp-action="Create">Sale Your Car</a>
+        }
+    </div>
+
+    <div class="pr-0 pl-0 table-responsive">
+        <table class="table table-hover table-bordered border-light" style="background-color:#eefeff;">
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    string s = "/Sale/View/" + item.Id.ToString();
+                    n++;
+
+                    <tr onclick="location.href = '@s'">
+
+                        @{string i = "/image/sale/img" + n.ToString() + ".jpg";
+                            <td class="p-0 vh-3 vw-3 text-center">
+                                <img class="img rounded-lg" style="max-width: 150px; max-height: 100px;" src=@i />
+                            </td>
+                        }
+                        <td>
+                            <b>@Html.DisplayFor(m => item.Make.Name) (@Html.DisplayFor(m => item.Year))</b> <br />
+                            <b>Model: </b>@Html.DisplayFor(m => item.Model.Name) <br />
+                            <b>Kilometer:</b> @Html.DisplayFor(m => item.Kilometer)<br />
+                        </td>
+                        <td>@Html.DisplayFor(m => item.Price) (@Html.DisplayFor(m => item.Currency))</td>  
+                        @if (User.IsInRole(Roles.Admin))
+                        {
+                            <td> <partial name="_TableButtonPartial" model="item.Id" /></td>
+
+                        }
+
+
+
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+
+

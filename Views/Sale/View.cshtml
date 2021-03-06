@@ -1,0 +1,77 @@
+﻿@model Car.Models.ViewModels.CarViewModel
+@using Car.Extensions
+@{ ViewData["Title"] = "İlan İncele - ";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+<br />
+
+<div id="hide">
+    <select id="selectMake" disabled="disabled" asp-for="Sale.MakeID" asp-items="Model.Makes.ToSelectListItem()" class="form-control"></select>
+    <select id="selectModel" disabled="disabled" asp-for="Sale.ModelID" asp-items="Model.Models.ToSelectListItem()" class="form-control"></select>
+    <select id="selectCurrency" disabled="disabled" asp-for="Sale.Currency" asp-items="Model.Currencies.ToSelectListItem()" class="form-control"></select>
+</div>
+<div class="jumbotron">
+    <div>
+
+        <div>
+            <span class="display-4">@Html.DisplayFor(x => x.Sale.Price)</span>
+            <span class="display-4" id="CurrencyDiv">Here Will be Currency</span>
+        </div>
+        <br />
+        <div>
+            <span class="display-4" id="MakeDiv">Here Will be Make</span>
+            <span class="display-4"> | </span>
+            <span class="display-4" id="ModelDiv">Here Will be Model</span>
+        </div>
+        <br />
+
+        <div>
+            <span class="display-4">@Html.DisplayFor(x => x.Sale.Kilometer)</span>
+            <span class="display-4">Kilometer</span>
+        </div>
+        <br />
+        <div>
+            <span class="display-4">Model Year:</span>
+            <span class="display-4">@Html.DisplayFor(x => x.Sale.Year)</span>
+        </div>
+
+
+
+
+
+        <br />
+
+        <p class="lead">
+            <span>@Html.DisplayFor(x => x.Sale.SellerName)</span> |  <span>@Html.DisplayFor(x => x.Sale.SellerPhone)</span> |  @{string eMail = "mailto:" + Model.Sale.SellerEmail; }
+            <a href="@eMail"><span>@Html.DisplayFor(x => x.Sale.SellerEmail)</span></a>
+        </p>
+
+
+
+        <hr class="my-4">
+        <br />
+        <p>@Html.DisplayFor(x => x.Sale.Features)</p>
+
+
+
+
+        <p class="lead">
+            <a asp-action="Index" class="btn btn-primary btn-lg">Back</a>
+        </p>
+    </div>
+
+</div>
+
+<script>
+    document.getElementById("hide").hidden = true;
+    //Pushes Value Of Currecy
+    var currency = document.getElementById("selectCurrency");
+    document.getElementById("CurrencyDiv").innerText = currency.options[currency.selectedIndex].text;
+    //Pushes Value Of Make
+    var make = document.getElementById("selectMake");
+    document.getElementById("MakeDiv").innerText = make.options[make.selectedIndex].text;
+
+    //Pushes Value Of Model
+    var model = document.getElementById("selectModel");
+    document.getElementById("ModelDiv").innerText = model.options[model.selectedIndex].text;
+
+</script>
